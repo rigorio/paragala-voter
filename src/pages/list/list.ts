@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Storage} from '@ionic/storage';
 
 import {NavController, NavParams} from 'ionic-angular';
 
@@ -13,17 +14,20 @@ export class NomineePage {
   companies: string[];
   categories: string[];
   categs: string[];
-  nominees: Array<{ title: string, company: string, category: string }>;
-  selected: Array<{ title: string, company: string, category: string }>;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  nominees: Array<{ id: number, title: string, company: string, category: string }>;
+  selected: Array<{ id: number, title: string, company: string, category: string }>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
     this.fillValues();
-    for (let i = 1; i < this.companies.length; i++) {
+    this.nominees = [];
+    console.log(this.companies.length)
+    for (let i = 0; i < this.companies.length; i++) {
       this.nominees.push({
+        id: (i+1),
         title: this.titles[i],
         company: this.companies[i],
         category: this.categories[i]
       });
-    console.log(this.nominees)
     }
 
   }
@@ -35,20 +39,33 @@ export class NomineePage {
       'Best Male News Anchor', 'Best Morning Show', 'Best National Television Station', 'Best News Program', 'Journalist of the Year'
     ];
     this.titles = [
-      'Public Eye: Klasrum Kalsada PTV 4 Public Affairs', 'Philippine Seas by Atom Araullo', 'Reel Time: Salat', 'Di ka Pasisiil by Jeff Canoy and Chiara Zambrano',
-      'Chiara Zambrano in TV Patrol', 'Maricel Halili in Aksyon Tonite', 'Karol Di in PTV News', 'Sandra Aguinaldo in 24 Oras',
-      'Doris Bigornia in TV Patrol', 'Ina Andolong in Newsroom', 'Susan Enriquez in 24 Oras', 'Amy Perez in Umagang Kay Ganda',
-      'Love Anover in Unang Hirit', 'Claire Celdran in New Day', 'Dianne Medina in Bagong Pilipinas', 'Suzie Entrata-Abrera in Unang Hirit',
-      'Winnie Cornejo in Umagang Kay Ganda', 'Pia Archanghel in Saksi', 'Mitzi Borromeo in Newsroom', 'Dianne Querrer in PTV News', 'Vicky Morales in 24 Oras',
+      'Public Eye: Klasrum Kalsada PTV 4 Public Affairs', 'Philippine Seas by Atom Araullo',
+      'Reel Time: Salat', '\'Di ka Pasisiil by Jeff Canoy and Chiara Zambrano',
+      'Chiara Zambrano in TV Patrol', 'Maricel Halili in Aksyon Tonite',
+      'Karol Di in PTV News', 'Sandra Aguinaldo in 24 Oras', 'Doris Bigornia in TV Patrol',
+      'Ina Andolong in Newsroom', 'Susan Enriquez in 24 Oras',
+      'Amy Perez in Umagang Kay Ganda', 'Love Anover in Unang Hirit',
+      'Claire Celdran in New Day', 'Dianne Medina in Bagong Pilipinas',
+      'Suzie Entrata-Abrera in Unang Hirit', 'Winnie Cornejo in Umagang Kay Ganda',
+      'Pia Archanghel in Saksi', 'Mitzi Borromeo in Newsroom',
+      'Dianne Querrer in PTV News', 'Vicky Morales in 24 Oras',
       'Mae Ann Los Banos in Aksyon Tonite', 'Bernadette Sembrano in TV Patrol',
-      'DWBL 91.9', 'UFM 105.1', 'GV FM 99.1', 'DWCL 92.7', 'RW 95.1', 'ABS-CBN Pampanga TV 46', 'GNN 44 Infomax 9', 'Community TV 3', 'CLTV 36',
-      'IJuander', 'My Puhunan', 'RATED K', 'Doland Castro in TV Patrol', 'Joseph Morong in 24 Oras', 'Raffy Tima in 24 Oras',
-      'Renz Ongkiko in Aksyon Tonite', 'JM Encinas in PTV News', 'Jorge Carino in TV Patrol', 'David Santos in Newsroom',
-      'Tonipet Gaba in Unang Hirit', 'Jules Guiang in Bagong Pilipinas', 'Ivan Mayrina in Unang Hirit', 'Anthony Taberna in Umagang Kay Ganda',
-      'Andrei Felix in New Day', 'Ariel Ureta in Umagang Kay Ganda', 'Alex Santos in Sentro Balita',
-      'Arnold Clavio in Saksi', 'Erwin Tulfo in PTV News', 'Ted Failon in TV Patrol', 'Ed Lingao in Aksyon Tonite', 'Noli De Castro in TV Patrol', 'New Day', 'Unang Hirit', 'Magandang Buhay',
-      'Bagong Pilipinas', 'Umagang Kay Ganda', 'Alto Broadcasting System - Chronic Broadcasting Network', 'TV 5', 'Greater Manila Area', 'People\'s Television', 'Saksi',
-      'Bandila', 'Aksyon Tonite', '24 Oras', 'Newsroom', 'PTV News', 'TV Patrol', 'Bong Lacson', 'Ashley Manabat', 'Frederico Pascual'
+      'DWBL 91.9', 'UFM 105.1', 'GV FM 99.1', 'DWCL 92.7',
+      'RW 95.1', 'ABS-CBN Pampanga TV 46', 'GNN 44 Infomax 9', 'Community TV 3', 'CLTV 36', 'Kapuso mo, Jessica Soho',
+      'IJuander', 'My Puhunan', 'RATED K', 'Doland Castro in TV Patrol',
+      'Joseph Morong in 24 Oras', 'Raffy Tima in 24 Oras',
+      'Renz Ongkiko in Aksyon Tonite', 'JM Encinas in PTV News',
+      'Jorge Carino in TV Patrol', 'David Santos in Newsroom',
+      'Tonipet Gaba in Unang Hirit', 'Jules Guiang in Bagong Pilipinas',
+      'Ivan Mayrina in Unang Hirit', 'Anthony Taberna in Umagang Kay Ganda',
+      'Andrei Felix in New Day', 'Ariel Ureta in Umagang Kay Ganda',
+      'Alex Santos in Sentro Balita', 'Arnold Clavio in Saksi',
+      'Erwin Tulfo in PTV News', 'Ted Failon in TV Patrol', 'Ed Lingao in Aksyon Tonite',
+      'Noli De Castro in TV Patrol', 'New Day', 'Unang Hirit', 'Magandang Buhay', 'Bagong Pilipinas',
+      'Umagang Kay Ganda', 'Alto Broadcasting System - Chronic Broadcasting Network', 'TV 5', 'Greater Manila Area',
+      'People\'s Television', 'Saksi',
+      'Bandila', 'Aksyon Tonite', '24 Oras', 'Newsroom',
+      'PTV News', 'TV Patrol', 'Bong Lacson', 'Ashley Manabat', 'Frederico Pascual'
     ];
     this.companies = ['PTV 4', 'GMA', 'GMA', 'ABS-CBN', 'ABS-CBN', 'TV5', 'PTV 4', 'GMA',
       'ABS-CBN', 'CNN Philippines', 'GMA', 'ABS-CBN', 'GMA', 'CNN Philippines', 'PTV 4', 'GMA', 'ABS-CBN', 'GMA', 'CNN Philippines', 'PTV 4', 'GMA',
@@ -76,12 +93,15 @@ export class NomineePage {
     ]
   }
 
+  vote() {
+    this.storage.clear();
+    console.log("heyhey")
+  }
+
   itemTapped(event, category) {
     this.selected = this.nominees.filter(function (element, index, array) {
       return category == element.category
     });
-
-    console.log(this.selected);
     this.navCtrl.push(ItemDetailsPage, {
       selectedNominees: this.selected,
       category: category

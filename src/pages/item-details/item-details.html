@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <button menuToggle *ngIf="!selectedItem">
+    <button menuToggle *ngIf="!nominees ">
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>{{category }}</ion-title>
@@ -8,10 +8,15 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let nominee of nominees">
-    <ion-card-header>
-      {{ nominee.title }}
-    </ion-card-header>
-    {{ nominee.company }}
-  </ion-card>
+  <ion-list radio-group>
+    <ion-list-header>
+      {{category}}
+    </ion-list-header>
+
+    <ion-item *ngFor="let item of items">
+      <ion-label>{{item.title}}</ion-label>
+      <ion-radio checked="{{item.box}}" (click)="select($event, item)"></ion-radio>
+    </ion-item>
+
+  </ion-list>
 </ion-content>

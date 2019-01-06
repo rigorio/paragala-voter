@@ -7,10 +7,12 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-card>
+<ion-content class=" cards-bg">
+  <button ion-button class="vote" (click)="vote()">Cast Votes</button>
+  <ion-card class="cards-list-demo">
     <ion-card-header>
       Categories
+      <!--<button ion-button class="vote">Finalize Votes</button>-->
     </ion-card-header>
 
     <ion-list>
