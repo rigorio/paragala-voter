@@ -4,6 +4,7 @@ import {Storage} from '@ionic/storage';
 import {NavController, NavParams} from 'ionic-angular';
 
 import {ItemDetailsPage} from '../item-details/item-details';
+import {CheckoutPage} from "../checkout/checkout";
 
 @Component({
   selector: 'page-list',
@@ -18,12 +19,13 @@ export class NomineePage {
   selected: Array<{ id: number, title: string, company: string, category: string }>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+    storage.set("sino", "ako");
     this.fillValues();
     this.nominees = [];
     console.log(this.companies.length)
     for (let i = 0; i < this.companies.length; i++) {
       this.nominees.push({
-        id: (i+1),
+        id: (i + 1),
         title: this.titles[i],
         company: this.companies[i],
         category: this.categories[i]
@@ -94,8 +96,18 @@ export class NomineePage {
   }
 
   vote() {
-    this.storage.clear();
-    console.log("heyhey")
+    // this.storage.get("sino").then(value => {
+    //   console.log(value)
+    // });
+    // this.storage.get("secret").then(value => {
+    //   console.log(value)
+    // });
+    // this.storage.clear();
+    console.log("heyhey");
+    this.navCtrl.push(
+      CheckoutPage, {
+        categories: this.categs
+      });
   }
 
   itemTapped(event, category) {

@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar>
+    <button menuToggle *ngIf="!nominees ">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Finalize votes</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item>
+    <ion-card *ngFor="let vote of votes">
+      <ion-card-header>
+        {{ vote.category }}
+      </ion-card-header>
+      <ion-card-content>
+        <h3>
+          {{ vote.title }}
+        </h3>
+        <h5>
+          {{ vote.company }}
+        </h5>
+      </ion-card-content>
+    </ion-card>
+
+  </ion-item>
+
+  <ion-item>
+    <ion-label>School</ion-label>
+    <ion-select [(ngModel)]="school">
+      <ion-option *ngFor="let school of schools">{{school}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="primary" floating>Unique Id</ion-label>
+    <ion-input [(ngModel)]="id"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label color="primary" floating>Vote Code</ion-label>
+    <ion-input [(ngModel)]="code"></ion-input>
+  </ion-item>
+
+  <button ion-button (click)="confirmVotes()">Send Votes</button>
+
+</ion-content>

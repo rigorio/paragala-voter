@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Storage} from '@ionic/storage';
 
 import {NavController, NavParams} from 'ionic-angular';
+import {MapList} from "../list/map-list";
 
 
 @Component({
@@ -27,7 +28,7 @@ export class ItemDetailsPage {
   }
 
   select($event, nominee) {
-    this.storage.set(this.category, nominee.title);
+    this.storage.set(this.category, new MapList(nominee.title, nominee.company, nominee.category));
     this.storage.get(this.category).then(value => console.log(value));
   }
 
@@ -37,7 +38,7 @@ export class ItemDetailsPage {
     this.storage.get(this.category).then(value => {
 
       for (let i = 0; i < this.nominees.length; i++) {
-        if (this.nominees[i].title == value)
+        if (this.nominees[i].title == value.title)
           box = true;
         this.items.push({
           title: this.nominees[i].title,

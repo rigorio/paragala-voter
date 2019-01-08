@@ -10,16 +10,20 @@ import { NomineePage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {IonicStorageModule} from "@ionic/storage";
+import {CheckoutPage} from "../pages/checkout/checkout";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
     MyApp,
     HelloIonicPage,
     ItemDetailsPage,
-    NomineePage
+    NomineePage,
+    CheckoutPage
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
@@ -28,7 +32,8 @@ import {IonicStorageModule} from "@ionic/storage";
     MyApp,
     HelloIonicPage,
     ItemDetailsPage,
-    NomineePage
+    NomineePage,
+    CheckoutPage
   ],
   providers: [
     StatusBar,
