@@ -56,6 +56,13 @@ export class CheckoutPage {
   }
 
   confirmVotes() {
+    let alert = this.alertCtrl.create({
+      title: 'Thank you for voting!',
+      subTitle: 'Please wait for confirmation',
+      buttons: ['Ok']
+    });
+    // add loading
+    alert.present();
     if (this.id == null || this.code == null) {
       let alert = this.alertCtrl.create({
         title: 'Incomplete Details!',
@@ -99,7 +106,7 @@ export class CheckoutPage {
   private getConfig() {
     let message = this.mapRequest.toJSON();
     console.log(message);
-    let url = "https://murmuring-earth-96219.herokuapp.com/api/vote";
+    let url = "https://murmuring-earth-96219.herokuapp.com/api/voting";
     // fetch(url, {
     //   body
     // })
