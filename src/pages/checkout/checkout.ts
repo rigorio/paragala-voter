@@ -5,8 +5,6 @@ import {VoteItem} from "./vote-item";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {TSMap} from "typescript-map"
 import {Response} from "./Response"
-import {tryCatch} from "rxjs/util/tryCatch";
-import {catchError} from "rxjs/operators";
 
 /**
  * Generated class for the CheckoutPage page.
@@ -15,7 +13,6 @@ import {catchError} from "rxjs/operators";
  * Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: 'page-checkout',
   templateUrl: 'checkout.html',
@@ -40,7 +37,7 @@ export class CheckoutPage {
     this.fillSchools();
 
     this.categories = [];
-    this.categories = navParams.get("categories");
+    this.fillCategories();
     this.votes = [];
     for (let category of this.categories) {
       this.storage.get(category).then(value => {
@@ -79,6 +76,7 @@ export class CheckoutPage {
         subTitle: response['message'],
         buttons: ['Ok']
       });
+      // add loading
       alert.present();
     })
 
@@ -88,6 +86,14 @@ export class CheckoutPage {
     // this.http.post()
 
 
+  }
+
+  private fillCategories(){
+    this.categories = [
+      'Best Documentary', 'Best Female Field Reporter', 'Best Female Morning Show Host', 'Best Female News Anchor', 'Best Local Radio Station',
+      'Best Local Television Station', 'Best Magazine Show', 'Best Male Field Reporter', 'Best Male Morning Show Host',
+      'Best Male News Anchor', 'Best Morning Show', 'Best National Television Station', 'Best News Program', 'Journalist of the Year'
+    ];
   }
 
   private getConfig() {

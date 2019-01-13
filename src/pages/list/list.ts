@@ -96,14 +96,6 @@ export class NomineePage {
   }
 
   vote() {
-    // this.storage.get("sino").then(value => {
-    //   console.log(value)
-    // });
-    // this.storage.get("secret").then(value => {
-    //   console.log(value)
-    // });
-    // this.storage.clear();
-    console.log("heyhey");
     this.navCtrl.push(
       CheckoutPage, {
         categories: this.categs

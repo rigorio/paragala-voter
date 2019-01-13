@@ -8,6 +8,7 @@ import { NomineePage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {CheckoutPage} from "../pages/checkout/checkout";
 
 
 @Component({
@@ -32,7 +33,8 @@ export class MyApp {
     // set our app's pages
     this.pages = [
       { title: 'Home', component: HelloIonicPage },
-      { title: 'Vote', component: NomineePage }
+      { title: 'Voting Page', component: NomineePage },
+      { title: 'Send Votes', component: CheckoutPage }
     ];
   }
 

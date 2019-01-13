@@ -1,9 +1,9 @@
 <ion-header>
   <ion-navbar>
-    <button menuToggle *ngIf="!nominees ">
+    <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Finalize votes</ion-title>
+    <ion-title>Send Votes</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -34,15 +34,15 @@
   </ion-item>
 
   <ion-item>
-    <ion-label color="primary" floating>Unique Id</ion-label>
+    <ion-label color="norm-green" floating>Unique Id</ion-label>
     <ion-input [(ngModel)]="id"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label color="primary" floating>Vote Code</ion-label>
+    <ion-label color="norm-green" floating>Vote Code</ion-label>
     <ion-input [(ngModel)]="code"></ion-input>
   </ion-item>
 
-  <button ion-button (click)="confirmVotes()">Send Votes</button>
+  <button color="light-green" ion-button (click)="confirmVotes()">Send Votes</button>
 
 </ion-content>

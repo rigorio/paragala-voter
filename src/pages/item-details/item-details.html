@@ -15,7 +15,7 @@
 
     <ion-item *ngFor="let item of items">
       <ion-label>{{item.title}}</ion-label>
-      <ion-radio checked="{{item.box}}" (click)="select($event, item)"></ion-radio>
+      <ion-radio color="light-green" checked="{{item.box}}" (click)="select($event, item)"></ion-radio>
     </ion-item>
 
   </ion-list>
