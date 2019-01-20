@@ -3,6 +3,7 @@ import {Storage} from '@ionic/storage';
 
 import {NavController, NavParams} from 'ionic-angular';
 import {MapList} from "../list/map-list";
+import {Host} from "../host";
 
 
 @Component({
@@ -10,16 +11,19 @@ import {MapList} from "../list/map-list";
   templateUrl: 'item-details.html'
 })
 export class ItemDetailsPage {
-  nominees: any;
+  nominees:  Array<{ id: number, title: string, company: string, category: string }>;
   category: any;
   voted: boolean = false;
   items: Array<{ title: string, company: string, category: string, box: boolean }>;
-
+  host: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+    this.host = Host.host;
     // If we navigated to this page, we will have an item available as a nav param
     this.nominees = navParams.get('selectedNominees');
     this.category = navParams.get('category');
+
+
     this.items = [];
     this.voted = true;
     this.addItems();
@@ -32,6 +36,7 @@ export class ItemDetailsPage {
     this.storage.get(this.category).then(value => console.log(value));
   }
 
+  // TODO NANUYNI ?!?!
   private addItems() {
     let box = false;
     var tempTitle: string = "";

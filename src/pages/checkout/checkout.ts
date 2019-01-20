@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, NavController, NavParams} from 'ionic-angular';
 import {Storage} from "@ionic/storage";
 import {VoteItem} from "./vote-item";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {TSMap} from "typescript-map"
-import {Response} from "./Response"
+import {Response} from "../Response"
+import {Host} from "../host";
 
 /**
  * Generated class for the CheckoutPage page.
@@ -19,6 +20,10 @@ import {Response} from "./Response"
 })
 export class CheckoutPage {
 
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad CheckoutPage');
+  }
+
   categories: string[];
   schools: string[];
   votes: VoteItem[];
@@ -26,6 +31,7 @@ export class CheckoutPage {
   code: any;
   school: any;
   mapRequest = new TSMap();
+  host: string;
 
   constructor(
     public navCtrl: NavController,
@@ -34,22 +40,36 @@ export class CheckoutPage {
     private alertCtrl: AlertController,
     private http: HttpClient
   ) {
+    this.host = Host.host;
+
     this.fillSchools();
 
     this.categories = [];
-    this.fillCategories();
-    this.votes = [];
-    for (let category of this.categories) {
-      this.storage.get(category).then(value => {
-        this.votes.push({
-          title: value.title,
-          category: value.category,
-          company: value.company,
-        })
-      })
-        .catch(ayawko => {
+    let url = this.host + "/api/data/categories";
+    this.http.get<Response>(url).pipe().toPromise().then(response => {
+      console.log(response.status);
+      console.log(response.message);
+      this.categories = response.message;
+    }).then(_ => {
+      this.votes = [];
+      for (let category of this.categories) {
+        console.log(category);
+        this.storage.get(category).then(value => {
+          console.log("ara");
+          console.log(value.title + " " + value.category + " " + value.company);
+          this.votes.push({
+
+            title: value.title,
+            category: value.category,
+            company: value.company,
+          })
+        }).catch(_ => {
         });
-    }
+      }
+
+    });
+    console.log("nanie?");
+    this.categories.forEach(categ => console.log(categ));
 
 
     // this.storage = navParams.get("storage");
@@ -77,10 +97,18 @@ export class CheckoutPage {
     this.mapRequest.set("school", this.school);
     this.mapRequest.set("votes", this.votes);
     // var jsonReq = JSON.stringify(this.mapRequest);
-    this.getConfig().subscribe((response: Response)=>{
+    this.getConfig().pipe().toPromise().then(response => {
       let alert = this.alertCtrl.create({
         title: response['status'],
         subTitle: response['message'],
+        buttons: ['Ok']
+      });
+      // add loading
+      alert.present();
+    }).catch(error=> {
+      let alert = this.alertCtrl.create({
+        title: error['status'],
+        subTitle: error['message'],
         buttons: ['Ok']
       });
       // add loading
@@ -91,22 +119,12 @@ export class CheckoutPage {
     // console.log(jsonReq);
 
     // this.http.post()
-
-
-  }
-
-  private fillCategories(){
-    this.categories = [
-      'Best Documentary', 'Best Female Field Reporter', 'Best Female Morning Show Host', 'Best Female News Anchor', 'Best Local Radio Station',
-      'Best Local Television Station', 'Best Magazine Show', 'Best Male Field Reporter', 'Best Male Morning Show Host',
-      'Best Male News Anchor', 'Best Morning Show', 'Best National Television Station', 'Best News Program', 'Journalist of the Year'
-    ];
   }
 
   private getConfig() {
     let message = this.mapRequest.toJSON();
     console.log(message);
-    let url = "https://murmuring-earth-96219.herokuapp.com/api/voting";
+    let url = this.host + "/api/voters/vote";
     // fetch(url, {
     //   body
     // })
@@ -148,16 +166,12 @@ export class CheckoutPage {
     }
   };
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CheckoutPage');
+  private fillSchools() {
+    let url = this.host + "/api/data/schools";
+    this.http.get<Response>(url).pipe().toPromise().then(response => {
+      console.log(response.status);
+      this.schools = response.message;
+    })
   }
 
-  private fillSchools() {
-    this.schools = [
-      'Holy Angel University',
-      'Angeles University Foundation',
-      'Mabalacat City College',
-      'Tarlac State University'
-    ]
-  }
 }

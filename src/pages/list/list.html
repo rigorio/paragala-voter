@@ -14,9 +14,9 @@
       Categories
     </ion-card-header>
 
-    <ion-list>
-      <button ion-item *ngFor="let category of categs" (click)="itemTapped($event, category)">
-        {{ category }}
+    <ion-list >
+      <button [ngStyle]="{'color': category.status ? '#43890D' : 'black'}" ion-item *ngFor="let category of newCategories" (click)="selectCategory($event, category.name)">
+        {{ category.name }}
       </button>
 
     </ion-list>

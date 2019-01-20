@@ -1,8 +1,8 @@
 export class Response {
   private _status: string;
-  private _message: string;
+  private _message: any;
 
-  constructor(status: string, message: string) {
+  constructor(status: string, message: any) {
     this._status = status;
     this._message = message;
   }
@@ -16,11 +16,11 @@ export class Response {
     this._status = value;
   }
 
-  get message(): string {
+  get message() {
     return this._message;
   }
 
-  set message(value: string) {
+  set message(value: any) {
     this._message = value;
   }
 }
