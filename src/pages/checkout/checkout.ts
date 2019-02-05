@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AlertController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, Loading, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {Storage} from "@ionic/storage";
 import {VoteItem} from "./vote-item";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
@@ -38,7 +38,8 @@ export class CheckoutPage {
     public navParams: NavParams,
     private storage: Storage,
     private alertCtrl: AlertController,
-    private http: HttpClient
+    private http: HttpClient,
+    private loadingController: LoadingController
   ) {
     this.host = Host.host;
 
@@ -75,14 +76,18 @@ export class CheckoutPage {
     // this.storage = navParams.get("storage");
   }
 
+
+
   confirmVotes() {
-    let alert = this.alertCtrl.create({
-      title: 'Thank you for voting!',
-      subTitle: 'Please wait for confirmation',
-      buttons: ['Ok']
-    });
+    let loading = this.loadingController.create({content : "Sending votes..."});
+
+    // let alert = this.alertCtrl.create({
+    //   title: 'Thank you for voting!',
+    //   subTitle: 'Please wait for confirmation',
+    //   buttons: ['Ok']
+    // });
     // add loading
-    alert.present();
+    // alert.present();
     if (this.id == null || this.code == null) {
       let alert = this.alertCtrl.create({
         title: 'Incomplete Details!',
@@ -92,12 +97,14 @@ export class CheckoutPage {
       alert.present();
       return;
     }
+    loading.present();
     this.mapRequest.set("id", this.id);
     this.mapRequest.set("code", this.code);
     this.mapRequest.set("school", this.school);
     this.mapRequest.set("votes", this.votes);
     // var jsonReq = JSON.stringify(this.mapRequest);
     this.getConfig().pipe().toPromise().then(response => {
+      loading.dismissAll();
       let alert = this.alertCtrl.create({
         title: response['status'],
         subTitle: response['message'],

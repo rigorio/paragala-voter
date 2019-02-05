@@ -4,6 +4,7 @@ import {Storage} from '@ionic/storage';
 import {NavController, NavParams} from 'ionic-angular';
 import {MapList} from "../list/map-list";
 import {Host} from "../host";
+import {NomineePage} from "../list/list";
 
 
 @Component({
@@ -34,6 +35,7 @@ export class ItemDetailsPage {
   select($event, nominee) {
     this.storage.set(this.category, new MapList(nominee.title, nominee.company, nominee.category));
     this.storage.get(this.category).then(value => console.log(value));
+    this.navCtrl.setRoot(NomineePage);
   }
 
   // TODO NANUYNI ?!?!

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {TSMap} from "typescript-map";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
-import {AlertController} from "ionic-angular";
+import {AlertController, LoadingController} from "ionic-angular";
 import {Response} from "../Response";
 import {Host} from "../host";
 
@@ -17,8 +17,11 @@ export class HelloIonicPage {
   schools: string[];
   host: string;
 
-  constructor(private alertCtrl: AlertController,
-              private http: HttpClient) {
+  constructor(
+    private alertCtrl: AlertController,
+    private http: HttpClient,
+    private loadingController: LoadingController
+  ) {
     this.host = Host.host;
 
     let url = this.host + "/api/data/schools";
@@ -30,6 +33,9 @@ export class HelloIonicPage {
   }
 
   register() {
+    let loading = this.loadingController.create({content: "Registering..."});
+    loading.present();
+
     this.map.set("school", this.school);
     this.map.set("uniqueId", this.id);
     this.map.set("email", this.email);
@@ -40,8 +46,13 @@ export class HelloIonicPage {
         buttons: ['Ok']
       });
       // add loading
+      loading.dismissAll();
       alert.present();
-    }).catch(error=> {
+      this.map.delete("school");
+      this.map.delete("uniqueID");
+      this.map.delete("email");
+      this.map.delete("email");
+    }).catch(error => {
       let alert = this.alertCtrl.create({
         title: error['status'],
         subTitle: error['message'],
