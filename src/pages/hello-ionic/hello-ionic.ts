@@ -34,11 +34,21 @@ export class HelloIonicPage {
 
   register() {
     let loading = this.loadingController.create({content: "Registering..."});
-    loading.present();
+
+    if (this.school == null || this.id == null || this.email == null)  {
+      let alert = this.alertCtrl.create({
+        title: "Please fill up all required details",
+        buttons: ['Ok']
+      });
+      // add loading
+      alert.present();
+      return;
+    }
 
     this.map.set("school", this.school);
     this.map.set("uniqueId", this.id);
     this.map.set("email", this.email);
+    loading.present();
     this.getConfig().pipe().toPromise().then(response => {
       let alert = this.alertCtrl.create({
         title: response['status'],
@@ -50,17 +60,8 @@ export class HelloIonicPage {
       alert.present();
       this.map.delete("school");
       this.map.delete("uniqueID");
-      this.map.delete("email");
-      this.map.delete("email");
-    }).catch(error => {
-      let alert = this.alertCtrl.create({
-        title: error['status'],
-        subTitle: error['message'],
-        buttons: ['Ok']
-      });
-      // add loading
-      alert.present();
-    });
+      this.map.delete("email")
+    })
   }
 
 
