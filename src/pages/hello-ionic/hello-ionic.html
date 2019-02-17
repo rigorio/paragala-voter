@@ -11,31 +11,12 @@
 <ion-content padding>
   <img class="paragala-logo" src="../../assets/imgs/paragala-logo.jpg">
 
-  <h3>Welcome to the voting app for the 2019 Paragala!</h3>
+  <h3>Welcome to the voting app for the Paragala: The Central Luzon Media Awards!</h3>
 
   <p>
     Please go to the voting section to cast your votes!
   </p>
 
-  Don't have a voter's code yet? Register below!
-
-  <ion-item>
-    <ion-label>School</ion-label>
-    <ion-select [(ngModel)]="school">
-      <ion-option *ngFor="let school of schools">{{school}}</ion-option>
-    </ion-select>
-  </ion-item>
-
-  <ion-item>
-    <ion-label color="norm-green" floating>Email</ion-label>
-    <ion-input [(ngModel)]="email"></ion-input>
-  </ion-item>
-
-  <ion-item>
-    <ion-label color="norm-green" floating>Student Id</ion-label>
-    <ion-input [(ngModel)]="id"></ion-input>
-  </ion-item>
-
-  <button color="light-green" ion-button (click)="register()">Register</button>
+  If you don't have a Voting Code yet, please wait for further instructions from administrators.
 
 </ion-content>
