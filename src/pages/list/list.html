@@ -1,24 +1,23 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Voting Page</ion-title>
-  </ion-navbar>
-</ion-header>
 
-<ion-content class="cards-bg">
+<ion-content>
   <!--<button ion-button class="vote" (click)="vote()">Cast Votes</button>-->
-  <ion-card class="cards-list-demo">
-    <ion-card-header>
-      Categories
-    </ion-card-header>
+  <div class="cards-list-demo" text-center>
 
-    <ion-list >
-      <button [ngStyle]="{'color': category.status ? '#43890D' : 'black'}" ion-item *ngFor="let category of newCategories" (click)="selectCategory($event, category.name)">
-        {{ category.name }}
-      </button>
+    <ion-card>
+      <ion-card-header>
+        Categories
+      </ion-card-header>
 
-    </ion-list>
-  </ion-card>
+      <ion-list>
+        <button [ngStyle]="{'color': category.status ? '#43890D' : 'black'}" ion-item
+                *ngFor="let category of newCategories" (click)="selectCategory($event, category.name)">
+          {{ category.name }}
+        </button>
+
+      </ion-list>
+
+    </ion-card>
+
+    <button class="kwan" color="light-green" ion-button (click)="sendVotes()" align="right">Send Votes</button>
+  </div>
 </ion-content>

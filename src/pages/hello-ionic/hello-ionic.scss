@@ -2,9 +2,17 @@ page-hello-ionic {
 
 }
 
-.paragala-logo {
+
+img{
+  height: 50vh;
+  width: auto;
+  margin: auto;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 80%;
 }
+
+.center {
+  margin: auto;
+  width: 90%;
+  text-align: center;
+}
+

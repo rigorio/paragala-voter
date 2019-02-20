@@ -1,48 +1,36 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Send Votes</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  <ion-item>
-    <ion-card *ngFor="let vote of votes">
-      <ion-card-header>
-        {{ vote.category }}
-      </ion-card-header>
-      <ion-card-content>
-        <h3>
-          {{ vote.title }}
-        </h3>
-        <h5>
-          {{ vote.company }}
-        </h5>
-      </ion-card-content>
-    </ion-card>
+  <div class="cards-list-demo" text-center>
 
-  </ion-item>
+    <ion-item>
+      <ion-card *ngFor="let vote of votes">
+        <ion-card-header>
+          {{ vote.category }}
+        </ion-card-header>
+        <ion-card-content>
+          <h3>
+            {{ vote.title }}
+          </h3>
+          <h5>
+            {{ vote.company }}
+          </h5>
+        </ion-card-content>
+      </ion-card>
 
-  <ion-item>
-    <ion-label>School</ion-label>
-    <ion-select [(ngModel)]="school">
-      <ion-option *ngFor="let school of schools">{{school}}</ion-option>
-    </ion-select>
-  </ion-item>
+    </ion-item>
 
-  <ion-item>
-    <ion-label color="norm-green" floating>Unique Id</ion-label>
-    <ion-input [(ngModel)]="id"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label color="norm-green" floating>Vote Code</ion-label>
+      <ion-input [(ngModel)]="code"></ion-input>
+    </ion-item>
 
-  <ion-item>
-    <ion-label color="norm-green" floating>Vote Code</ion-label>
-    <ion-input [(ngModel)]="code"></ion-input>
-  </ion-item>
+    <button class="kwan" color="light-green" ion-button (click)="sendVotes()" align="right">Send Votes</button>
+    <button class="kwan" color="danger" ion-button (click)="reset()">Reset Votes</button>
 
-  <button color="light-green" ion-button (click)="confirmVotes()">Send Votes</button>
-
+  </div>
 </ion-content>

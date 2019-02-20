@@ -28,7 +28,7 @@ export class MyApp {
     public splashScreen: SplashScreen,
     private storage: Storage
   ) {
-    this.storage.clear();
+    // this.storage.clear();
     this.initializeApp();
 
     // set our app's pages

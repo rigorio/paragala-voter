@@ -5,6 +5,7 @@ import {NavController, NavParams} from 'ionic-angular';
 import {MapList} from "../list/map-list";
 import {Host} from "../host";
 import {NomineePage} from "../list/list";
+import {Nominee} from "../Nominee";
 
 
 @Component({
@@ -12,10 +13,10 @@ import {NomineePage} from "../list/list";
   templateUrl: 'item-details.html'
 })
 export class ItemDetailsPage {
-  nominees:  Array<{ id: number, title: string, company: string, category: string }>;
+  nominees:  Nominee[];
   category: any;
   voted: boolean = false;
-  items: Array<{ title: string, company: string, category: string, box: boolean }>;
+  items: Array<{ id: number, title: string, company: string, category: string, box: boolean }>;
   host: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
@@ -32,13 +33,13 @@ export class ItemDetailsPage {
 
   }
 
-  select($event, nominee) {
-    this.storage.set(this.category, new MapList(nominee.title, nominee.company, nominee.category));
+  select($event, item) {
+    this.storage.set(this.category, new Nominee(item.id, item.title, item.company, item.category));
     this.storage.get(this.category).then(value => console.log(value));
     this.navCtrl.setRoot(NomineePage);
   }
 
-  // TODO NANUYNI ?!?!
+  // TODO NANUYNI ?!? I think the purpose is that it adds a box thing
   private addItems() {
     let box = false;
     var tempTitle: string = "";
@@ -48,6 +49,7 @@ export class ItemDetailsPage {
         if (this.nominees[i].title == value.title)
           box = true;
         this.items.push({
+          id: this.nominees[i].id,
           title: this.nominees[i].title,
           company: this.nominees[i].company,
           category: this.nominees[i].category,
@@ -56,11 +58,12 @@ export class ItemDetailsPage {
         box = false;
       }
     console.log("temporary title is " + tempTitle);
-    }).catch(
+    }).catch( // idk what this is
       value=>{
         for (let i = 0; i < this.nominees.length; i++) {
 
           this.items.push({
+            id: this.nominees[i].id,
             title: this.nominees[i].title,
             company: this.nominees[i].company,
             category: this.nominees[i].category,
