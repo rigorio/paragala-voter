@@ -1,25 +1,19 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Hello Ionic</ion-title>
-  </ion-navbar>
-</ion-header>
 
 
-<ion-content padding>
+<ion-content padding text-center>
+  <img src="../../assets/imgs/paragala-logo.jpg" height='250' width='250'>
 
-  <h3>Welcome to your first Ionic app!</h3>
+  <div class="center">
+    <h1>Welcome to the voting app for the Paragala: The Central Luzon Media Awards!</h1>
 
-  <p>
-    This starter project is our way of helping you get a functional app running in record time.
-  </p>
-  <p>
-    Follow along on the tutorial section of the Ionic docs!
-  </p>
-  <p>
-    <button ion-button color="primary" menuToggle>Toggle Menu</button>
-  </p>
+    <h3>
+      Click the button below to start casting your votes!
+    </h3>
+    <h5>
+      If you don't have a Voting Code yet, please wait for further instructions from administrators.
+    </h5>
+  </div>
+  <br>
+  <button class="kwan" color="light-green" ion-button (click)="castVotes()" align="right">Cast Votes</button>
 
 </ion-content>

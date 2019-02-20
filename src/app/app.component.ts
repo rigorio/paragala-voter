@@ -1,12 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
+import {Storage} from '@ionic/storage';
 
 import { Platform, MenuController, Nav } from 'ionic-angular';
 
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
-import { ListPage } from '../pages/list/list';
+import { NomineePage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {CheckoutPage} from "../pages/checkout/checkout";
 
 
 @Component({
@@ -23,18 +25,22 @@ export class MyApp {
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen
+    public splashScreen: SplashScreen,
+    private storage: Storage
   ) {
+    // this.storage.clear();
     this.initializeApp();
 
     // set our app's pages
     this.pages = [
-      { title: 'Hello Ionic', component: HelloIonicPage },
-      { title: 'My First List', component: ListPage }
+      { title: 'Home', component: HelloIonicPage },
+      { title: 'Voting Page', component: NomineePage },
+      { title: 'Send Votes', component: CheckoutPage }
     ];
   }
 
   initializeApp() {
+    this.storage.set("secret", "sumusuko nako");
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

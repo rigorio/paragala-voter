@@ -1,20 +1,23 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>My First List</ion-title>
-  </ion-navbar>
-</ion-header>
 
 <ion-content>
-  <ion-list>
-    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">
-      <ion-icon name="{{item.icon}}" item-left></ion-icon>
-      {{item.title}}
-      <div class="item-note" item-right>
-        {{item.note}}
-      </div>
-    </button>
-  </ion-list>
+  <!--<button ion-button class="vote" (click)="vote()">Cast Votes</button>-->
+  <div class="cards-list-demo" text-center>
+
+    <ion-card>
+      <ion-card-header>
+        Categories
+      </ion-card-header>
+
+      <ion-list>
+        <button [ngStyle]="{'color': category.status ? '#43890D' : 'black'}" ion-item
+                *ngFor="let category of newCategories" (click)="selectCategory($event, category.name)">
+          {{ category.name }}
+        </button>
+
+      </ion-list>
+
+    </ion-card>
+
+    <button class="kwan" color="light-green" ion-button (click)="sendVotes()" align="right">Send Votes</button>
+  </div>
 </ion-content>
