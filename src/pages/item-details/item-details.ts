@@ -23,6 +23,7 @@ export class ItemDetailsPage {
     this.host = Host.host;
     // If we navigated to this page, we will have an item available as a nav param
     this.nominees = navParams.get('selectedNominees');
+    console.log(this.nominees);
     this.category = navParams.get('category');
 
 
@@ -36,7 +37,7 @@ export class ItemDetailsPage {
   select($event, item) {
     this.storage.set(this.category, new Nominee(item.id, item.title, item.company, item.category));
     this.storage.get(this.category).then(value => console.log(value));
-    this.navCtrl.setRoot(NomineePage);
+    this.navCtrl.pop();
   }
 
   // TODO NANUYNI ?!? I think the purpose is that it adds a box thing

@@ -10,6 +10,8 @@
 
     <ion-item>
       <ion-card *ngFor="let vote of votes">
+        <button ion-item (click)="selectCategory($event, vote.category)">
+
         <ion-card-header>
           {{ vote.category }}
         </ion-card-header>
@@ -21,6 +23,9 @@
             {{ vote.company }}
           </h5>
         </ion-card-content>
+
+        </button>
+
       </ion-card>
 
     </ion-item>

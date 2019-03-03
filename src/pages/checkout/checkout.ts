@@ -8,6 +8,7 @@ import {Response} from "../Response"
 import {Host} from "../host";
 import {HelloIonicPage} from "../hello-ionic/hello-ionic";
 import {NomineePage} from "../list/list";
+import {ItemDetailsPage} from "../item-details/item-details";
 
 /**
  * Generated class for the CheckoutPage page.
@@ -43,6 +44,14 @@ export class CheckoutPage {
     private loadingController: LoadingController
   ) {
 
+
+    // this.storage = navParams.get("storage");
+  }
+
+  ionViewDidEnter() {
+    let loading = this.loadingController.create({content: "Loading..."});
+    loading.present();
+
     this.pages = [
       {title: 'Home', component: HelloIonicPage},
       {title: 'Cast Votes', component: NomineePage},
@@ -56,8 +65,7 @@ export class CheckoutPage {
     this.categories = [];
     let url = this.host + "/api/data/categories";
     this.http.get<Response>(url).pipe().toPromise().then(response => {
-      console.log(response.status);
-      console.log(response.message);
+      console.log(response);
       this.categories = response.message;
     }).then(_ => {
       this.votes = [];
@@ -78,13 +86,30 @@ export class CheckoutPage {
       }
       console.log("sparkles");
       console.log(this.voteIds);
+      loading.dismissAll();
     });
     console.log("nanie?");
     this.categories.forEach(categ => console.log(categ));
 
-
-    // this.storage = navParams.get("storage");
   }
+
+  selectCategory(event, category) {
+
+    let selected: any;
+    let url = Host.host + "/api/data/nominees?category=" + category;
+    console.log("nanda?");
+    this.http.get<Response>(url).pipe().toPromise().then(response => {
+      console.log(response);
+      selected = response.message;
+      this.navCtrl.push(ItemDetailsPage, {
+        selectedNominees: selected,
+        category: category
+      })
+    });
+
+
+  }
+
 
   sendVotes() {
     if (this.kwan())
@@ -111,7 +136,16 @@ export class CheckoutPage {
         buttons: ['Ok']
       });
       alert.present();
-    }).then(_ => loading.dismissAll());
+
+      if (response.status != "Not allowed"){
+        console.log('Confirm Okay');
+        this.storage.clear();
+        this.navCtrl.setRoot(NomineePage);
+      }
+    }).then(_ => {
+        loading.dismissAll();
+      }
+    );
 
   }
 

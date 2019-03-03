@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Storage} from '@ionic/storage';
 
-import {AlertController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {Response} from "../Response";
 import {ItemDetailsPage} from '../item-details/item-details';
 import {CheckoutPage} from "../checkout/checkout";
@@ -26,10 +26,22 @@ export class NomineePage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private storage: Storage,
+              private loadingController: LoadingController,
               private alertCtrl: AlertController,
               private http: HttpClient) {
+
+
+
+  }
+
+  ionViewDidEnter() {
+    let loading = this.loadingController.create({content: "Loading..."});
+    loading.present();
+    console.log("shang ri la");
+
     this.host = Host.host;
     this.nominees = [];
+    this.newCategories = [];
 
     let url = this.host + "/api/data/nominees";
     this.http.get<Response>(url).pipe().toPromise()
@@ -56,9 +68,8 @@ export class NomineePage {
           });
         });
       })
+      loading.dismissAll();
     });
-
-
   }
 
   selectCategory(event, category) {
